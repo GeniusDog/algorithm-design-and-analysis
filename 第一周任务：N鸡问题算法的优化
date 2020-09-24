@@ -1,5 +1,5 @@
 ###算法时间复杂度优化：O（n^2）--> O(n)
-###代码：
+###代码如下：
 
 import java.util.Scanner;
 
