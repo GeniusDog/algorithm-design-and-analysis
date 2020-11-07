@@ -1,0 +1,140 @@
+import java.util.Scanner;
+
+/**
+ * @author Dragon
+ * time:2020年9月23日20点09分
+ * 功能：解决N元N鸡问题
+ * 输入：N
+ * 输出：c s （c是可行解的个数，s是可行解中公鸡的总和数）
+ * 求解：设公鸡的数量为a（0-N/5），母鸡的数量为b（0-N/3）
+ * 简化公式：7a+4b=N
+ * 改进版：O(n^2)->O(n)
+ */
+public class Main {
+
+	public static void main(String[] args) 
+	{
+		// 读取用户输入的数据
+		Scanner in=new Scanner(System.in);
+		int N=in.nextInt();
+		
+		//调用计算方法，得出结果
+		Main nChickenProblem=new Main();
+		int[] result=nChickenProblem.getResultPerfect(N);
+		
+		//输出结果
+		nChickenProblem.printResult(result);
+	}
+
+	//打印数组中的数据
+	private void printResult(int[] result) 
+	{
+		//在这里对无解的情况做特殊处理
+		if(result[0]==0)
+			System.out.println("0 -1");
+		else
+			System.out.printf("%d %d",result[0],result[1]);
+	}
+	
+	//改进版：O(n^2)->O(n)
+	private int[] getResultPerfect(int n)
+	{
+		//System.out.println("-------start: getResultPerfect --------");
+		
+		//返回结果
+		int[] result=new int[2];
+		
+		//公鸡a只（0-n/5）,母机b只（0-n/3）
+		int a = 0,b=0;
+		int aLimit=n/5;
+		
+		//可行解的个数c，公鸡的总和数s
+		int c=0,s=0;
+		
+		//根据公式7a+4b=N 对问题进行处理
+		for(;a<=aLimit;a++)
+		{
+			//System.out.println("-------start: 开始处理 --------");
+			//System.out.printf("### a=%d \n",a);
+			
+			if((n-7*a)%4==0 && (n-7*a)>=0)
+			{
+				b=(n-7*a)/4;
+				//System.out.printf("*** b=%d \n",b);
+				//测试的代码：打印输出查看
+				//System.out.printf("%d.公鸡数为：%d，母鸡数为：%d,小鸡数为：%d",c+1,a,b,n-a-b);
+				//System.out.println();
+				
+				c++;s+=a;
+			}
+			
+			//注意，这里要是漏掉了，程序就出现漏洞了
+			b=0;
+			
+			//System.out.println("-------end: 结束处理 --------");
+		}
+		
+		//最后结果保存在result数组中
+		result[0]=c;
+		result[1]=s;
+		
+		//System.out.println("-------end: getResult --------");
+		
+		return result;
+		
+
+	}
+
+	//根据传递进来的n，得出可行解的个数和公鸡的总和数，保存在数组result中
+	private int[] getResult(int n) 
+	{
+		//System.out.println("-------start: getResult --------");
+		//返回结果
+		int[] result=new int[2];
+		
+		//公鸡a只（0-n/5）,母机b只（0-n/3）
+		int a = 0,b=0;
+		int aLimit=n/5;
+		int bLimit=n/3;
+		
+		//可行解的个数c，公鸡的总和数s
+		int c=0,s=0;
+		
+		//根据公式7a+4b=N 对问题进行处理
+		for(;a<=aLimit;a++)
+		{
+			//System.out.println("-------start: 开始处理 --------");
+			//System.out.printf("### a=%d \n",a);
+			
+			for(;b<=bLimit;b++)
+			{
+				//System.out.printf("*** b=%d \n",b);
+				
+				//满足题目要求，对s和c进行操作并保存
+				if(7*a+4*b==n)
+				{
+					//测试的代码：打印输出查看
+					//System.out.printf("%d.公鸡数为：%d，母鸡数为：%d,小鸡数为：%d",c+1,a,b,n-a-b);
+					//System.out.println();
+					
+					c++;s+=a;
+				}
+			}
+			
+			//注意，这里要是漏掉了，程序就出现漏洞了
+			b=0;
+			
+			//System.out.println("-------end: 结束处理 --------");
+		}
+		
+		//最后结果保存在result数组中
+		result[0]=c;
+		result[1]=s;
+		
+		//System.out.println("-------end: getResult --------");
+		
+		return result;
+		
+	}
+
+}
